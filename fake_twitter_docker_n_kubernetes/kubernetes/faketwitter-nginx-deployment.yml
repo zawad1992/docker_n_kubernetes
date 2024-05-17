@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fake-twitter-nginx-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fake-twitter-nginx
+  template:
+    metadata:
+      labels:
+        app: fake-twitter-nginx
+    spec:
+      containers:
+      - name: fake-twitter-nginx
+        image: docker-app-fake-twitter-nginx-image:v1
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: fake-twitter-volume
+          mountPath: /var/www/html
+      volumes:
+      - name: fake-twitter-volume
+        persistentVolumeClaim:
+          claimName: fake-twitter-volume
