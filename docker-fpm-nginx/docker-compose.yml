@@ -1,0 +1,20 @@
+services:
+  fake-twitter-fpm-nginx:
+    image: docker-app-fpm-nginx-image:v1
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    volumes:
+      - fake-twitter-fpm-nginx-volume:/var/www/html
+      - ./nginx.conf:/etc/nginx/http.d/default.conf
+    ports:
+      - "8085:80"
+    environment:
+      - MYSQL_HOST=db-mariadb
+      - MYSQL_DATABASE=dbfaketwitter
+      - MYSQL_USERNAME=root
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_DB_PORT=3306
+    container_name: fake-twitter-fpm-nginx-container
+volumes:
+  fake-twitter-fpm-nginx-volume:
